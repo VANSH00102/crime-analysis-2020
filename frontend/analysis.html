@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analysis – Indian Crime Analysis 2020</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .run-card {
+      background: linear-gradient(135deg, rgba(192,57,43,0.08), rgba(243,156,18,0.04));
+      border: 1px solid rgba(192,57,43,0.25);
+      border-radius: var(--radius-lg);
+      padding: 52px 40px;
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .run-card h2 { font-family:var(--font-display); font-size:1.7rem; margin-bottom:12px; }
+    .run-card p  { color:var(--text-muted); max-width:500px; margin:0 auto 28px; font-size:0.95rem; }
+    .status-log {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      color: var(--text-muted);
+      min-height: 80px;
+      max-height: 220px;
+      overflow-y: auto;
+      line-height: 1.8;
+    }
+    .log-line { display:flex; align-items:flex-start; gap:10px; }
+    .log-time { color:var(--text-dim); min-width:68px; }
+    .log-ok   { color:var(--green); }
+    .log-err  { color:var(--accent2); }
+    .log-info { color:var(--blue); }
+    .results-section { animation:fadeInUp 0.5s ease both; }
+    .img-preview-grid {
+      display:grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .img-preview-item { position:relative; overflow:hidden; border-radius:var(--radius); border:1px solid var(--border); }
+    .img-preview-item img { width:100%; display:block; }
+    .img-preview-item .img-name {
+      position:absolute; bottom:0; left:0; right:0;
+      background:rgba(0,0,0,0.7); font-size:10px; padding:5px 8px;
+      color:var(--text); font-family:var(--font-mono);
+    }
+    .step-list { list-style:none; counter-reset: steps; }
+    .step-list li {
+      counter-increment: steps;
+      display:flex; align-items:flex-start; gap:14px;
+      padding:14px 0; border-bottom:1px solid var(--surface2);
+    }
+    .step-list li:last-child { border-bottom:none; }
+    .step-num {
+      width:28px; height:28px; border-radius:50%; flex-shrink:0;
+      background:rgba(192,57,43,0.1); border:1px solid rgba(192,57,43,0.3);
+      color:var(--accent2); font-size:12px; font-family:var(--font-mono);
+      display:flex; align-items:center; justify-content:center;
+    }
+    .step-body h4 { font-weight:600; margin-bottom:3px; font-size:14px; }
+    .step-body p  { color:var(--text-muted); font-size:12.5px; }
+  </style>
+</head>
+<body>
+
+<div id="navContainer"></div>
+<div id="spinnerContainer"></div>
+
+<div class="page-wrapper">
+
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb">Home &nbsp;/&nbsp; <span>Analysis</span></div>
+      <h1>⚙ Run Analysis</h1>
+      <p>Trigger the full Python analysis pipeline to preprocess data, compute statistics, and regenerate all visualizations.</p>
+    </div>
+  </div>
+
+  <div style="padding:36px 0 72px;">
+    <div class="container">
+
+      <!-- ── Run Card ───────────────────────────────────────── -->
+      <div class="run-card">
+        <h2>🔬 Full Analysis Pipeline</h2>
+        <p>This will load the CSV, clean data, compute all stats, and regenerate 8 visualization charts saved in the outputs folder.</p>
+        <button class="btn btn-primary btn-large" id="runBtn" onclick="runAnalysis()">
+          ▶ Run Full Analysis
+        </button>
+        <div style="margin-top:16px;font-size:12px;color:var(--text-dim);">
+          ⏱ Estimated time: 10–30 seconds depending on your machine
+        </div>
+      </div>
+
+      <!-- ── Pipeline Steps ─────────────────────────────────── -->
+      <div class="card" style="margin-bottom:24px;">
+        <h2 style="font-family:var(--font-display);font-size:1.05rem;margin-bottom:16px;">📋 Pipeline Steps</h2>
+        <ul class="step-list">
+          <li><div class="step-num">1</div><div class="step-body"><h4>Load Dataset</h4><p>Read crime_data_2020.csv from the data/ directory.</p></div></li>
+          <li><div class="step-num">2</div><div class="step-body"><h4>Preprocess</h4><p>Handle missing values, strip whitespace, compute derived columns (Chargesheet Rate, Conviction Rate).</p></div></li>
+          <li><div class="step-num">3</div><div class="step-body"><h4>Compute Statistics</h4><p>Calculate totals, rankings, top states, most common crimes, and averages.</p></div></li>
+          <li><div class="step-num">4</div><div class="step-body"><h4>Generate Charts</h4><p>Create 8 visualizations (bar, pie, grouped bar, heatmap, scatter, stacked) using Matplotlib and Seaborn.</p></div></li>
+          <li><div class="step-num">5</div><div class="step-body"><h4>Save Outputs</h4><p>Export all PNG images to the backend/outputs/ folder for the frontend to fetch.</p></div></li>
+        </ul>
+      </div>
+
+      <!-- ── Console Log ─────────────────────────────────────── -->
+      <div style="margin-bottom:24px;">
+        <h2 style="font-family:var(--font-display);font-size:1.05rem;margin-bottom:10px;">🖥 Console Log</h2>
+        <div class="status-log" id="statusLog">
+          <div class="log-line"><span class="log-time">—</span><span>Waiting for analysis to start...</span></div>
+        </div>
+      </div>
+
+      <!-- ── Results (hidden until run) ───────────────────────── -->
+      <div id="resultsSection" style="display:none;" class="results-section">
+
+        <div class="alert alert-success" id="successBanner" style="margin-bottom:20px;">
+          ✔ Analysis completed successfully! All charts have been regenerated.
+        </div>
+
+        <!-- Key Stats -->
+        <div class="result-box">
+          <h2 style="font-family:var(--font-display);font-size:1.1rem;margin-bottom:18px;">📊 Analysis Results</h2>
+          <ul class="result-list" id="resultList"></ul>
+        </div>
+
+        <!-- Image previews -->
+        <div class="result-box" style="margin-top:20px;">
+          <h2 style="font-family:var(--font-display);font-size:1.05rem;margin-bottom:6px;">🖼 Generated Images</h2>
+          <p style="font-size:12.5px;color:var(--text-muted);margin-bottom:14px;">
+            View all charts in full on the <a href="visualizations.html" style="color:var(--accent);">Visualizations page</a>.
+          </p>
+          <div class="img-preview-grid" id="imgPreviewGrid"></div>
+        </div>
+
+        <div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap;">
+          <a href="visualizations.html" class="btn btn-primary">🖼 View All Charts</a>
+          <a href="dashboard.html" class="btn btn-secondary">📊 View Dashboard</a>
+          <button class="btn btn-secondary" onclick="runAnalysis()">🔄 Re-run Analysis</button>
+        </div>
+      </div>
+
+      <!-- ── Error state ────────────────────────────────────── -->
+      <div id="errorSection" style="display:none;">
+        <div class="alert alert-error" id="errorBanner"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="footerContainer"></div>
+<script src="script.js"></script>
+<script>
+const LOG = document.getElementById('statusLog');
+const API_BASE = 'http://localhost:5001';
+
+function addLog(msg, type = 'info') {
+  const now = new Date().toLocaleTimeString('en-IN', { hour12: false });
+  LOG.innerHTML += `<div class="log-line"><span class="log-time">${now}</span><span class="log-${type}">${msg}</span></div>`;
+  LOG.scrollTop = LOG.scrollHeight;
+}
+
+async function runAnalysis() {
+  const btn = document.getElementById('runBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Running...';
+  document.getElementById('resultsSection').style.display = 'none';
+  document.getElementById('errorSection').style.display   = 'none';
+  LOG.innerHTML = '';
+
+  showSpinner('Running analysis pipeline...');
+
+  addLog('Starting analysis pipeline...', 'info');
+  addLog('Sending POST request to /run-analysis...', 'info');
+
+  try {
+    const start = Date.now();
+    const d = await apiFetch('/run-analysis', { method: 'POST' });
+    const elapsed = ((Date.now() - start) / 1000).toFixed(1);
+
+    addLog(`✔ Dataset loaded and preprocessed.`, 'ok');
+    addLog(`✔ Statistics computed.`, 'ok');
+    addLog(`✔ ${d.images_generated.length} visualizations generated.`, 'ok');
+    addLog(`✔ Analysis complete in ${elapsed}s.`, 'ok');
+
+    const s = d.stats;
+
+    // Populate results
+    document.getElementById('resultList').innerHTML = [
+      ['Total Cases Registered',    fmtNum(s.total_crimes)],
+      ['State with Most Crimes',    s.top_state],
+      ['Most Common Crime',         s.most_common_crime],
+      ['Avg Conviction Rate',       s.avg_conviction_rate + '%'],
+      ['Total Persons Arrested',    fmtNum(s.total_persons_arrested)],
+      ['States / UTs Covered',      s.num_states_covered],
+      ['Crime Categories',          s.num_crime_types],
+      ['Highest Crime Rate State',  s.highest_crime_rate_state],
+    ].map(([k,v]) => `<li><span class="rl-key">${k}</span><span class="rl-val">${v}</span></li>`).join('');
+
+    // Image previews
+    document.getElementById('imgPreviewGrid').innerHTML = d.images_generated.map(fname => `
+      <div class="img-preview-item">
+        <img src="${API_BASE}/image/${fname}" alt="${fname}" loading="lazy" />
+        <div class="img-name">${fname.replace('.png','').replace(/_/g,' ')}</div>
+      </div>`).join('');
+
+    document.getElementById('resultsSection').style.display = 'block';
+
+  } catch(e) {
+    addLog(`✖ Error: ${e.message}`, 'err');
+    document.getElementById('errorBanner').textContent =
+      `Analysis failed: ${e.message}. Make sure Flask is running on port 5000.`;
+    document.getElementById('errorSection').style.display = 'block';
+  } finally {
+    hideSpinner();
+    btn.disabled = false;
+    btn.textContent = '▶ Run Full Analysis';
+  }
+}
+</script>
+</body>
+</html>

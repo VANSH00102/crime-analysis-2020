@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Indian Crime Analysis 2020 – Home</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- Shared Nav injected by JS -->
+<div id="navContainer"></div>
+<div id="spinnerContainer"></div>
+
+<div class="page-wrapper">
+
+  <!-- ── Hero ────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge">NCRB · India · 2020</div>
+      <h1>Indian Crime Data<br><span class="highlight">Analysis &amp; Visualization</span></h1>
+      <p>
+        A comprehensive full-stack data science project analyzing crime patterns
+        across India in 2020 — powered by Python, Flask, Pandas, Seaborn, and Matplotlib.
+      </p>
+      <div class="hero-cta">
+        <a href="dashboard.html" class="btn btn-primary btn-large">📊 View Dashboard</a>
+        <a href="visualizations.html" class="btn btn-secondary btn-large">🖼 Visualizations</a>
+        <a href="analysis.html" class="btn btn-secondary btn-large">⚙ Run Analysis</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Live Quick Stats ─────────────────────────────────── -->
+  <section style="padding: 0 0 56px;">
+    <div class="container">
+      <div class="stats-grid" id="quickStats">
+        <!-- Filled by JS -->
+        <div class="stat-card skeleton" style="height:120px;"></div>
+        <div class="stat-card skeleton" style="height:120px;"></div>
+        <div class="stat-card skeleton" style="height:120px;"></div>
+        <div class="stat-card skeleton" style="height:120px;"></div>
+      </div>
+      <div id="statsAlert"></div>
+    </div>
+  </section>
+
+  <!-- ── Features ─────────────────────────────────────────── -->
+  <section style="padding: 0 0 72px;">
+    <div class="container">
+      <div class="section-header">
+        <h2>Project Highlights</h2>
+        <p>What this project covers and what it demonstrates</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <span class="f-icon">🧹</span>
+          <h3>Data Preprocessing</h3>
+          <p>Handles missing values, type coercion, outlier detection, and derived metric calculation using Pandas.</p>
+        </div>
+        <div class="feature-card">
+          <span class="f-icon">📈</span>
+          <h3>Statistical Analysis</h3>
+          <p>Crime distribution, state rankings, conviction rates, and chargesheet efficiencies across 28+ states.</p>
+        </div>
+        <div class="feature-card">
+          <span class="f-icon">🗺️</span>
+          <h3>Rich Visualizations</h3>
+          <p>8 professional charts — bar, pie, heatmap, scatter, grouped bar, and stacked composition charts.</p>
+        </div>
+        <div class="feature-card">
+          <span class="f-icon">🔌</span>
+          <h3>REST API Backend</h3>
+          <p>Flask serves 5 API endpoints for data, stats, images, and on-demand analysis with CORS enabled.</p>
+        </div>
+        <div class="feature-card">
+          <span class="f-icon">💡</span>
+          <h3>Dynamic Frontend</h3>
+          <p>Vanilla JS fetches live data, renders tables, loads charts, and handles errors gracefully.</p>
+        </div>
+        <div class="feature-card">
+          <span class="f-icon">📋</span>
+          <h3>NCRB Data Structure</h3>
+          <p>Realistic dataset modelled on NCRB 2020 — covering 28 states, 10 crime types, 280 records.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Tech Stack ─────────────────────────────────────────── -->
+  <section style="padding: 0 0 72px;">
+    <div class="container">
+      <div class="section-divider"><h2>Tech Stack</h2></div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px;">
+        <span class="tag tag-red">Python 3.x</span>
+        <span class="tag tag-red">Flask</span>
+        <span class="tag tag-blue">Pandas</span>
+        <span class="tag tag-blue">NumPy</span>
+        <span class="tag tag-green">Matplotlib</span>
+        <span class="tag tag-green">Seaborn</span>
+        <span class="tag tag-gold">Flask-CORS</span>
+        <span class="tag tag-purple">Vanilla JS</span>
+        <span class="tag tag-purple">HTML5</span>
+        <span class="tag tag-purple">CSS3</span>
+      </div>
+
+      <!-- Dataset summary table -->
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Dataset Field</th>
+              <th>Description</th>
+              <th>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>State_UT</td><td>Indian State or Union Territory</td><td><span class="tag tag-blue">String</span></td></tr>
+            <tr><td>Crime_Type</td><td>IPC category (Murder, Theft, Rape, etc.)</td><td><span class="tag tag-blue">String</span></td></tr>
+            <tr><td>Cases_Registered</td><td>Total FIRs filed in 2020</td><td><span class="tag tag-green">Integer</span></td></tr>
+            <tr><td>Cases_Chargesheeted</td><td>Cases taken to court</td><td><span class="tag tag-green">Integer</span></td></tr>
+            <tr><td>Cases_Convicted</td><td>Cases resulting in conviction</td><td><span class="tag tag-green">Integer</span></td></tr>
+            <tr><td>Persons_Arrested</td><td>Total persons arrested</td><td><span class="tag tag-green">Integer</span></td></tr>
+            <tr><td>Crime_Rate</td><td>Cases per lakh population</td><td><span class="tag tag-gold">Float</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA Banner ─────────────────────────────────────────── -->
+  <section style="padding: 0 24px 80px;">
+    <div class="container">
+      <div class="card" style="
+        text-align:center;
+        padding: 52px 32px;
+        background: linear-gradient(135deg, rgba(192,57,43,0.1), rgba(243,156,18,0.06));
+        border-color: rgba(192,57,43,0.25);
+      ">
+        <h2 style="font-family:var(--font-display);font-size:1.9rem;margin-bottom:14px;">
+          Ready to Explore the Data?
+        </h2>
+        <p style="color:var(--text-muted);max-width:480px;margin:0 auto 28px;">
+          Run the analysis engine to generate all charts and insights from the 2020 crime dataset.
+        </p>
+        <a href="analysis.html" class="btn btn-primary btn-large">⚙ Run Full Analysis</a>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page-wrapper -->
+
+<div id="footerContainer"></div>
+
+<script src="script.js"></script>
+<script>
+/* ── Load quick stats on home page ──────────────────────── */
+async function loadQuickStats() {
+  const container = document.getElementById('quickStats');
+  try {
+    const d = await apiFetch('/stats');
+    container.innerHTML = `
+      <div class="stat-card" style="--card-accent: linear-gradient(90deg,#C0392B,#E74C3C);">
+        <span class="stat-icon">🗂</span>
+        <div class="stat-value" id="sv-total">0</div>
+        <div class="stat-label">Total Cases Registered</div>
+      </div>
+      <div class="stat-card" style="--card-accent: linear-gradient(90deg,#E67E22,#F39C12);">
+        <span class="stat-icon">🏛</span>
+        <div class="stat-value" style="font-size:1.4rem;">${d.top_state}</div>
+        <div class="stat-label">Highest Crime State</div>
+      </div>
+      <div class="stat-card" style="--card-accent: linear-gradient(90deg,#3498DB,#2980B9);">
+        <span class="stat-icon">⚖</span>
+        <div class="stat-value" id="sv-conv">0</div>
+        <div class="stat-label">Avg Conviction Rate (%)</div>
+      </div>
+      <div class="stat-card" style="--card-accent: linear-gradient(90deg,#2ECC71,#27AE60);">
+        <span class="stat-icon">👤</span>
+        <div class="stat-value" id="sv-arr">0</div>
+        <div class="stat-label">Total Persons Arrested</div>
+      </div>
+    `;
+    // Animate counters
+    animateCount(document.getElementById('sv-total'), d.total_crimes);
+    animateCount(document.getElementById('sv-conv'),  d.avg_conviction_rate);
+    animateCount(document.getElementById('sv-arr'),   d.total_persons_arrested);
+  } catch (err) {
+    showAlert('statsAlert', '⚠ Backend not running. Start Flask server to see live stats.', 'warning');
+    container.innerHTML = '';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadQuickStats);
+</script>
+</body>
+</html>

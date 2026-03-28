@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visualizations – Indian Crime Analysis 2020</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .lightbox-overlay {
+      display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9);
+      z-index:10000; align-items:center; justify-content:center;
+      backdrop-filter:blur(8px);
+    }
+    .lightbox-overlay.active { display:flex; }
+    .lightbox-inner { position:relative; max-width:90vw; max-height:90vh; }
+    .lightbox-inner img { max-width:100%; max-height:85vh; border-radius:12px; box-shadow:0 16px 64px rgba(0,0,0,0.8); }
+    .lightbox-close {
+      position:absolute; top:-16px; right:-16px; width:36px; height:36px;
+      background:var(--surface2); border:1px solid var(--border); border-radius:50%;
+      display:flex; align-items:center; justify-content:center; cursor:pointer;
+      font-size:16px; color:var(--text); transition:all var(--transition);
+    }
+    .lightbox-close:hover { background:var(--accent); }
+    .lightbox-caption {
+      text-align:center; margin-top:12px; font-size:13px; color:var(--text-muted);
+    }
+    .viz-card { cursor:pointer; }
+    .viz-card:hover .viz-card-img { opacity:0.85; }
+    .viz-nav { display:flex; justify-content:space-between; margin-top:12px; }
+    .viz-nav button {
+      background:var(--surface2); border:1px solid var(--border); color:var(--text);
+      padding:7px 18px; border-radius:8px; cursor:pointer; font-size:13px; transition:all var(--transition);
+    }
+    .viz-nav button:hover { background:var(--accent); border-color:var(--accent); }
+    .count-badge {
+      display:inline-block; background:rgba(192,57,43,0.15); color:var(--accent2);
+      border:1px solid rgba(192,57,43,0.3); padding:3px 10px; border-radius:20px;
+      font-family:var(--font-mono); font-size:11px; margin-left:8px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="navContainer"></div>
+<div id="spinnerContainer"></div>
+
+<!-- Lightbox -->
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox(event)">
+  <div class="lightbox-inner">
+    <div class="lightbox-close" onclick="closeLightbox()">✕</div>
+    <img id="lightboxImg" src="" alt="" />
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+    <div class="viz-nav">
+      <button onclick="lightboxNav(-1)">◀ Prev</button>
+      <button onclick="lightboxNav(+1)">Next ▶</button>
+    </div>
+  </div>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb">Home &nbsp;/&nbsp; <span>Visualizations</span></div>
+      <h1>🖼 Charts &amp; Visualizations</h1>
+      <p>All charts are generated on the backend using Matplotlib and Seaborn. Click any chart to view it full-size.</p>
+    </div>
+  </div>
+
+  <div style="padding:36px 0 72px;">
+    <div class="container">
+
+      <div id="alertBox"></div>
+
+      <!-- ── Header row ─────────────────────────────────────── -->
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:28px;">
+        <h2 style="font-family:var(--font-display);font-size:1.2rem;">
+          Generated Charts <span class="count-badge" id="chartCount">...</span>
+        </h2>
+        <div style="display:flex;gap:10px;">
+          <a href="analysis.html" class="btn btn-primary">⚙ Re-run Analysis</a>
+          <button class="btn btn-secondary" onclick="loadVisualizations()">🔄 Refresh</button>
+        </div>
+      </div>
+
+      <!-- ── Charts Grid ────────────────────────────────────── -->
+      <div class="viz-grid" id="vizGrid">
+        <!-- Skeleton placeholders -->
+        <div class="card skeleton" style="height:280px;"></div>
+        <div class="card skeleton" style="height:280px;"></div>
+        <div class="card skeleton" style="height:280px;"></div>
+        <div class="card skeleton" style="height:280px;"></div>
+      </div>
+
+      <!-- ── Empty state ────────────────────────────────────── -->
+      <div id="emptyState" style="display:none;text-align:center;padding:72px 24px;">
+        <div style="font-size:56px;margin-bottom:20px;">📭</div>
+        <h2 style="font-family:var(--font-display);margin-bottom:12px;">No Charts Found</h2>
+        <p style="color:var(--text-muted);margin-bottom:28px;">Run the analysis first to generate all visualizations.</p>
+        <a href="analysis.html" class="btn btn-primary btn-large">⚙ Run Analysis Now</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="footerContainer"></div>
+<script src="script.js"></script>
+<script>
+const API_BASE = 'http://localhost:5001';
+let images = [];
+let lightboxIdx = 0;
+
+/* ── Load visualizations ────────────────────────────── */
+async function loadVisualizations() {
+  showSpinner('Loading visualizations...');
+  try {
+    const d = await apiFetch('/visualizations');
+    images = d.images || [];
+
+    document.getElementById('chartCount').textContent = images.length;
+
+    if (!images.length) {
+      document.getElementById('vizGrid').innerHTML = '';
+      document.getElementById('emptyState').style.display = 'block';
+      return;
+    }
+    document.getElementById('emptyState').style.display = 'none';
+
+    document.getElementById('vizGrid').innerHTML = images.map((img, i) => `
+      <div class="viz-card" onclick="openLightbox(${i})">
+        <img
+          class="viz-card-img"
+          src="${API_BASE}${img.url}"
+          alt="${img.title}"
+          loading="lazy"
+          onerror="this.src=''; this.parentElement.querySelector('.viz-card-body').insertAdjacentHTML('beforebegin',
+            '<div style=\\'height:200px;display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:13px;background:var(--surface2);\\'>⚠ Image not found. Run analysis.</div>')"
+        />
+        <div class="viz-card-body">
+          <div class="viz-card-title">${img.title}</div>
+          <div class="viz-card-desc">${img.description}</div>
+        </div>
+      </div>`).join('');
+
+  } catch(e) {
+    document.getElementById('vizGrid').innerHTML = '';
+    document.getElementById('emptyState').style.display = 'none';
+    showAlert('alertBox',
+      `Could not load charts: ${e.message}. Make sure Flask is running and you have run the analysis once.`,
+      'error');
+  } finally {
+    hideSpinner();
+  }
+}
+
+/* ── Lightbox ────────────────────────────────────────── */
+function openLightbox(i) {
+  lightboxIdx = i;
+  updateLightbox();
+  document.getElementById('lightbox').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function updateLightbox() {
+  const img = images[lightboxIdx];
+  document.getElementById('lightboxImg').src = API_BASE + img.url;
+  document.getElementById('lightboxCaption').textContent =
+    `${lightboxIdx + 1} / ${images.length}  ·  ${img.title}`;
+}
+
+function lightboxNav(dir) {
+  lightboxIdx = (lightboxIdx + dir + images.length) % images.length;
+  updateLightbox();
+}
+
+function closeLightbox(e) {
+  if (!e || e.target === document.getElementById('lightbox') ||
+      e.currentTarget.classList.contains('lightbox-close')) {
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('active')) return;
+  if (e.key === 'ArrowRight') lightboxNav(+1);
+  if (e.key === 'ArrowLeft')  lightboxNav(-1);
+  if (e.key === 'Escape')     closeLightbox();
+});
+
+document.addEventListener('DOMContentLoaded', loadVisualizations);
+</script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard – Indian Crime Analysis 2020</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .top5-row { display: flex; align-items: center; gap: 14px; padding: 13px 16px; background: var(--surface2); border-radius: var(--radius); margin-bottom: 8px; }
+    .top5-rank { font-family: var(--font-mono); font-size: 12px; color: var(--text-dim); width: 22px; text-align: right; flex-shrink: 0; }
+    .top5-state { font-weight: 500; min-width: 160px; }
+    .top5-count { font-family: var(--font-mono); font-size: 12.5px; color: var(--accent2); margin-left: auto; white-space: nowrap; }
+    .crime-row  { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .crime-name { font-size: 13px; min-width: 200px; }
+    .crime-num  { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); margin-left: auto; white-space: nowrap; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    @media (max-width: 768px) { .two-col { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<div id="navContainer"></div>
+<div id="spinnerContainer"></div>
+
+<div class="page-wrapper">
+
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb">Home &nbsp;/&nbsp; <span>Dashboard</span></div>
+      <h1>📊 Crime Dashboard</h1>
+      <p>Real-time statistics and key insights from India's 2020 crime data — fetched live from the Flask backend.</p>
+    </div>
+  </div>
+
+  <div style="padding: 36px 0 64px;">
+    <div class="container">
+
+      <div id="alertBox"></div>
+
+      <!-- ── KPI Cards ─────────────────────────────────────── -->
+      <div class="section-divider" style="margin-bottom:20px;"><h2>Key Metrics</h2></div>
+      <div class="stats-grid" id="kpiGrid">
+        <div class="stat-card skeleton" style="height:110px;"></div>
+        <div class="stat-card skeleton" style="height:110px;"></div>
+        <div class="stat-card skeleton" style="height:110px;"></div>
+        <div class="stat-card skeleton" style="height:110px;"></div>
+        <div class="stat-card skeleton" style="height:110px;"></div>
+        <div class="stat-card skeleton" style="height:110px;"></div>
+      </div>
+
+      <!-- ── Two column layout ──────────────────────────────── -->
+      <div class="two-col" style="margin-top:28px;">
+
+        <!-- Top 5 States -->
+        <div class="card">
+          <div class="section-header"><h2 style="font-size:1.1rem;">🏆 Top 5 States by Cases</h2></div>
+          <div id="top5List"><div class="skeleton" style="height:220px;"></div></div>
+        </div>
+
+        <!-- Crime Type Breakdown -->
+        <div class="card">
+          <div class="section-header"><h2 style="font-size:1.1rem;">📂 Cases by Crime Type</h2></div>
+          <div id="crimeBreakdown"><div class="skeleton" style="height:220px;"></div></div>
+        </div>
+
+      </div>
+
+      <!-- ── Insights Text ──────────────────────────────────── -->
+      <div class="card" id="insightsCard" style="margin-top:20px;display:none;">
+        <h2 style="font-family:var(--font-display);font-size:1.15rem;margin-bottom:16px;">💡 Key Insights</h2>
+        <div id="insightsList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;"></div>
+      </div>
+
+      <!-- ── Refresh Button ─────────────────────────────────── -->
+      <div style="margin-top:28px;display:flex;gap:12px;align-items:center;">
+        <button class="btn btn-secondary" onclick="loadDashboard()">🔄 Refresh Stats</button>
+        <a href="visualizations.html" class="btn btn-primary">🖼 View Charts</a>
+        <span id="lastUpdated" style="font-size:12px;color:var(--text-dim);margin-left:auto;font-family:var(--font-mono);"></span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="footerContainer"></div>
+<script src="script.js"></script>
+<script>
+async function loadDashboard() {
+  showSpinner('Fetching statistics...');
+  document.getElementById('alertBox').innerHTML = '';
+  try {
+    const d = await apiFetch('/stats');
+
+    // ── KPI Cards ─────────────────────────────────────────────
+    document.getElementById('kpiGrid').innerHTML = `
+      <div class="stat-card" style="--card-accent:linear-gradient(90deg,#C0392B,#E74C3C);">
+        <span class="stat-icon">🗂</span>
+        <div class="stat-value" id="k1">0</div>
+        <div class="stat-label">Total Cases Registered</div>
+      </div>
+      <div class="stat-card" style="--card-accent:linear-gradient(90deg,#E67E22,#F39C12);">
+        <span class="stat-icon">🏛</span>
+        <div class="stat-value" style="font-size:1.3rem;">${d.top_state}</div>
+        <div class="stat-label">State with Most Crimes</div>
+      </div>
+      <div class="stat-card" style="--card-accent:linear-gradient(90deg,#9B59B6,#8E44AD);">
+        <span class="stat-icon">⚠️</span>
+        <div class="stat-value" style="font-size:1.25rem;">${d.most_common_crime}</div>
+        <div class="stat-label">Most Frequent Crime</div>
+      </div>
+      <div class="stat-card" style="--card-accent:linear-gradient(90deg,#2ECC71,#27AE60);">
+        <span class="stat-icon">👤</span>
+        <div class="stat-value" id="k4">0</div>
+        <div class="stat-label">Total Persons Arrested</div>
+      </div>
+      <div class="stat-card" style="--card-accent:linear-gradient(90deg,#3498DB,#2980B9);">
+        <span class="stat-icon">⚖</span>
+        <div class="stat-value" id="k5">0</div>
+        <div class="stat-label">Avg Conviction Rate (%)</div>
+      </div>
+      <div class="stat-card" style="--card-accent:linear-gradient(90deg,#1ABC9C,#16A085);">
+        <span class="stat-icon">🗺️</span>
+        <div class="stat-value">${d.num_states_covered}</div>
+        <div class="stat-label">States / UTs Covered</div>
+      </div>
+    `;
+    animateCount(document.getElementById('k1'), d.total_crimes);
+    animateCount(document.getElementById('k4'), d.total_persons_arrested);
+    animateCount(document.getElementById('k5'), d.avg_conviction_rate);
+
+    // ── Top 5 States ─────────────────────────────────────────
+    const maxCases = d.top5_states[0]?.Cases_Registered || 1;
+    document.getElementById('top5List').innerHTML = d.top5_states.map((s, i) => `
+      <div class="top5-row">
+        <div class="top5-rank">#${i+1}</div>
+        <div class="top5-state">${s.State_UT}</div>
+        <div style="flex:1;margin:0 10px;">
+          <div class="mini-bar">
+            <div class="mini-bar-track">
+              <div class="mini-bar-fill" style="width:${(s.Cases_Registered/maxCases*100).toFixed(1)}%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="top5-count">${fmtNum(s.Cases_Registered)}</div>
+      </div>`).join('');
+
+    // ── Crime Breakdown ───────────────────────────────────────
+    const maxCrime = d.crime_breakdown[0]?.Cases_Registered || 1;
+    document.getElementById('crimeBreakdown').innerHTML = d.crime_breakdown.map(c => `
+      <div class="crime-row">
+        <div class="crime-name">${c.Crime_Type}</div>
+        <div style="flex:1;margin:0 8px;">
+          <div class="mini-bar-track">
+            <div class="mini-bar-fill" style="width:${(c.Cases_Registered/maxCrime*100).toFixed(1)}%"></div>
+          </div>
+        </div>
+        <div class="crime-num">${fmtNum(c.Cases_Registered)}</div>
+      </div>`).join('');
+
+    // ── Insights ──────────────────────────────────────────────
+    document.getElementById('insightsCard').style.display = 'block';
+    document.getElementById('insightsList').innerHTML = [
+      ['📌 Top Crime State', d.top_state],
+      ['🔑 Most Common Crime', d.most_common_crime],
+      ['📊 Avg Conviction Rate', `${d.avg_conviction_rate}%`],
+      ['👮 Total Arrested', fmtNum(d.total_persons_arrested)],
+      ['🌐 States Covered', d.num_states_covered],
+      ['📁 Crime Categories', d.num_crime_types],
+      ['📈 Highest Crime Rate', d.highest_crime_rate_state],
+    ].map(([k,v]) => `
+      <div class="result-list" style="display:block;"><li style="display:flex;">
+        <span class="rl-key">${k}</span>
+        <span class="rl-val">${v}</span>
+      </li></div>`).join('');
+
+    // Timestamp
+    document.getElementById('lastUpdated').textContent =
+      'Updated: ' + new Date().toLocaleTimeString('en-IN');
+
+  } catch(e) {
+    showAlert('alertBox', `Backend error: ${e.message}. Make sure Flask is running on port 5000.`, 'error');
+    document.getElementById('kpiGrid').innerHTML = '';
+    document.getElementById('top5List').innerHTML = '';
+    document.getElementById('crimeBreakdown').innerHTML = '';
+  } finally {
+    hideSpinner();
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadDashboard);
+</script>
+</body>
+</html>

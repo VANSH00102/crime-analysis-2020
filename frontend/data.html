@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data – Indian Crime Analysis 2020</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .pagination { display:flex; gap:6px; align-items:center; justify-content:center; margin-top:16px; flex-wrap:wrap; }
+    .page-btn {
+      padding:6px 12px; border-radius:6px; border:1px solid var(--border);
+      background:var(--surface); color:var(--text); font-size:13px; cursor:pointer;
+      transition:all var(--transition); font-family:var(--font-mono);
+    }
+    .page-btn:hover { background:var(--surface2); border-color:var(--text-muted); }
+    .page-btn.active { background:var(--accent); border-color:var(--accent); color:#fff; }
+    .page-btn:disabled { opacity:0.35; cursor:not-allowed; }
+    .row-count { font-family:var(--font-mono); font-size:12px; color:var(--text-dim); }
+    .sort-arrow { font-size:10px; opacity:0.5; }
+    th.sortable { cursor:pointer; user-select:none; }
+    th.sortable:hover { color:var(--text); }
+    th.sort-asc .sort-arrow::after { content: ' ▲'; opacity:1; }
+    th.sort-desc .sort-arrow::after { content: ' ▼'; opacity:1; }
+    .export-bar { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:12px; }
+  </style>
+</head>
+<body>
+
+<div id="navContainer"></div>
+<div id="spinnerContainer"></div>
+
+<div class="page-wrapper">
+
+  <div class="page-header">
+    <div class="container">
+      <div class="breadcrumb">Home &nbsp;/&nbsp; <span>Data</span></div>
+      <h1>📋 Crime Dataset</h1>
+      <p>Browse, filter, and search the complete Indian crime dataset for 2020. Data is fetched live from the backend.</p>
+    </div>
+  </div>
+
+  <div style="padding:32px 0 64px;">
+    <div class="container">
+
+      <div id="alertBox"></div>
+
+      <!-- ── Filter Bar ────────────────────────────────────── -->
+      <div class="filter-bar">
+        <input type="text" id="searchInput" placeholder="🔍  Search state or crime type..." oninput="applyFilters()" />
+        <select id="stateFilter" onchange="applyFilters()">
+          <option value="">All States</option>
+        </select>
+        <select id="crimeFilter" onchange="applyFilters()">
+          <option value="">All Crime Types</option>
+        </select>
+        <button class="btn btn-secondary" onclick="resetFilters()">✕ Reset</button>
+      </div>
+
+      <!-- ── Row Summary ────────────────────────────────────── -->
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+        <div class="row-count" id="rowCount">Loading...</div>
+        <div class="export-bar">
+          <button class="btn btn-secondary" style="font-size:12.5px;padding:7px 14px;" onclick="exportCSV()">⬇ Export CSV</button>
+        </div>
+      </div>
+
+      <!-- ── Table ─────────────────────────────────────────── -->
+      <div class="table-container">
+        <table id="dataTable">
+          <thead>
+            <tr>
+              <th class="sortable" data-col="State_UT">State / UT <span class="sort-arrow"></span></th>
+              <th class="sortable" data-col="Crime_Type">Crime Type <span class="sort-arrow"></span></th>
+              <th class="sortable" data-col="Cases_Registered">Cases Registered <span class="sort-arrow"></span></th>
+              <th class="sortable" data-col="Cases_Chargesheeted">Chargesheeted <span class="sort-arrow"></span></th>
+              <th class="sortable" data-col="Cases_Convicted">Convicted <span class="sort-arrow"></span></th>
+              <th class="sortable" data-col="Persons_Arrested">Arrested <span class="sort-arrow"></span></th>
+              <th class="sortable" data-col="Crime_Rate">Crime Rate <span class="sort-arrow"></span></th>
+              <th>Chargesheet %</th>
+              <th>Conviction %</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            ${Array(10).fill('<tr>' + Array(9).fill('<td><div class="skeleton" style="height:13px;width:80%"></div></td>').join('') + '</tr>').join('')}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ── Pagination ─────────────────────────────────────── -->
+      <div class="pagination" id="pagination"></div>
+
+    </div>
+  </div>
+</div>
+
+<div id="footerContainer"></div>
+<script src="script.js"></script>
+<script>
+let allData    = [];
+let filtered   = [];
+let sortCol    = 'Cases_Registered';
+let sortDir    = 'desc';
+const PAGE_SZ  = 20;
+let currentPage= 1;
+
+/* ── Fetch data ─────────────────────────────────────── */
+async function loadData() {
+  showSpinner('Fetching dataset...');
+  try {
+    const d = await apiFetch('/data?limit=1000');
+    allData = d.data;
+
+    // Populate filter dropdowns
+    const states = [...new Set(allData.map(r => r.State_UT))].sort();
+    const crimes = [...new Set(allData.map(r => r.Crime_Type))].sort();
+    document.getElementById('stateFilter').innerHTML =
+      '<option value="">All States</option>' + states.map(s => `<option>${s}</option>`).join('');
+    document.getElementById('crimeFilter').innerHTML =
+      '<option value="">All Crime Types</option>' + crimes.map(c => `<option>${c}</option>`).join('');
+
+    applyFilters();
+  } catch(e) {
+    showAlert('alertBox', `Could not load data: ${e.message}`, 'error');
+    document.getElementById('tableBody').innerHTML = '';
+  } finally {
+    hideSpinner();
+  }
+}
+
+/* ── Filter + Sort ──────────────────────────────────── */
+function applyFilters() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const s = document.getElementById('stateFilter').value;
+  const c = document.getElementById('crimeFilter').value;
+
+  filtered = allData.filter(r => {
+    const matchQ = !q || r.State_UT.toLowerCase().includes(q) || r.Crime_Type.toLowerCase().includes(q);
+    const matchS = !s || r.State_UT === s;
+    const matchC = !c || r.Crime_Type === c;
+    return matchQ && matchS && matchC;
+  });
+
+  sortData();
+  currentPage = 1;
+  renderPage();
+}
+
+function sortData() {
+  filtered.sort((a,b) => {
+    const av = a[sortCol], bv = b[sortCol];
+    const cmp = typeof av === 'number' ? av - bv : String(av).localeCompare(String(bv));
+    return sortDir === 'asc' ? cmp : -cmp;
+  });
+}
+
+function resetFilters() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('stateFilter').value = '';
+  document.getElementById('crimeFilter').value = '';
+  applyFilters();
+}
+
+/* ── Render ─────────────────────────────────────────── */
+function renderPage() {
+  const start = (currentPage - 1) * PAGE_SZ;
+  const rows  = filtered.slice(start, start + PAGE_SZ);
+  document.getElementById('rowCount').textContent =
+    `Showing ${start+1}–${Math.min(start+PAGE_SZ, filtered.length)} of ${filtered.length} records`;
+
+  document.getElementById('tableBody').innerHTML = rows.length
+    ? rows.map(r => {
+        const csRate = r.Cases_Registered > 0
+          ? (r.Cases_Chargesheeted / r.Cases_Registered * 100).toFixed(1) + '%' : '—';
+        const cvRate = r.Cases_Registered > 0
+          ? (r.Cases_Convicted / r.Cases_Registered * 100).toFixed(1) + '%' : '—';
+        return `<tr>
+          <td>${r.State_UT}</td>
+          <td><span class="tag tag-red" style="font-size:11px;">${r.Crime_Type}</span></td>
+          <td>${fmtNum(r.Cases_Registered)}</td>
+          <td>${fmtNum(r.Cases_Chargesheeted)}</td>
+          <td>${fmtNum(r.Cases_Convicted)}</td>
+          <td>${fmtNum(r.Persons_Arrested)}</td>
+          <td><span class="tag tag-gold">${r.Crime_Rate}</span></td>
+          <td>${csRate}</td>
+          <td>${cvRate}</td>
+        </tr>`;
+      }).join('')
+    : '<tr><td colspan="9" style="text-align:center;color:var(--text-muted);padding:32px;">No records match your filters.</td></tr>';
+
+  renderPagination();
+}
+
+function renderPagination() {
+  const total = Math.ceil(filtered.length / PAGE_SZ);
+  if (total <= 1) { document.getElementById('pagination').innerHTML = ''; return; }
+
+  let html = `<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>‹ Prev</button>`;
+  for (let p = 1; p <= total; p++) {
+    if (p === 1 || p === total || Math.abs(p - currentPage) <= 1) {
+      html += `<button class="page-btn ${p===currentPage?'active':''}" onclick="goPage(${p})">${p}</button>`;
+    } else if (Math.abs(p - currentPage) === 2) {
+      html += `<span style="color:var(--text-dim)">…</span>`;
+    }
+  }
+  html += `<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage===total?'disabled':''}>Next ›</button>`;
+  document.getElementById('pagination').innerHTML = html;
+}
+
+function goPage(p) {
+  const total = Math.ceil(filtered.length / PAGE_SZ);
+  if (p < 1 || p > total) return;
+  currentPage = p;
+  renderPage();
+  window.scrollTo({ top: 300, behavior: 'smooth' });
+}
+
+/* ── Sort on header click ──────────────────────────── */
+document.querySelectorAll('th.sortable').forEach(th => {
+  th.addEventListener('click', () => {
+    const col = th.dataset.col;
+    if (sortCol === col) sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+    else { sortCol = col; sortDir = 'desc'; }
+
+    document.querySelectorAll('th.sortable').forEach(t => t.classList.remove('sort-asc','sort-desc'));
+    th.classList.add(sortDir === 'asc' ? 'sort-asc' : 'sort-desc');
+    sortData(); renderPage();
+  });
+});
+
+/* ── Export CSV ────────────────────────────────────── */
+function exportCSV() {
+  if (!filtered.length) return;
+  const cols = Object.keys(filtered[0]);
+  const rows = [cols.join(','), ...filtered.map(r => cols.map(c => `"${r[c]}"`).join(','))];
+  const blob = new Blob([rows.join('\n')], { type: 'text/csv' });
+  const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: 'crime_data_2020_filtered.csv' });
+  a.click();
+}
+
+document.addEventListener('DOMContentLoaded', loadData);
+</script>
+</body>
+</html>

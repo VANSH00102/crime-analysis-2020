@@ -1,0 +1,301 @@
+State_UT,Crime_Type,Cases_Registered,Cases_Chargesheeted,Cases_Convicted,Persons_Arrested,Crime_Rate
+Andhra Pradesh,Murder,2156,1987,1423,2341,3.9
+Andhra Pradesh,Rape,2296,2101,876,2312,4.2
+Andhra Pradesh,Kidnapping & Abduction,3421,3112,1456,3521,6.2
+Andhra Pradesh,Robbery,412,378,198,421,0.7
+Andhra Pradesh,Burglary,7821,6932,3241,7123,14.2
+Andhra Pradesh,Theft,28432,24312,9876,27341,51.8
+Andhra Pradesh,Riots,1234,1123,876,2341,2.2
+Andhra Pradesh,Cheating,4321,3987,1765,4123,7.9
+Andhra Pradesh,Counterfeiting,234,212,123,241,0.4
+Andhra Pradesh,Criminal Breach of Trust,1876,1723,876,1923,3.4
+Arunachal Pradesh,Murder,98,87,56,102,6.8
+Arunachal Pradesh,Rape,134,121,67,139,9.3
+Arunachal Pradesh,Kidnapping & Abduction,87,76,34,91,6.0
+Arunachal Pradesh,Robbery,23,21,12,25,1.6
+Arunachal Pradesh,Burglary,456,412,198,467,31.6
+Arunachal Pradesh,Theft,1234,1098,567,1267,85.6
+Arunachal Pradesh,Riots,34,31,21,41,2.4
+Arunachal Pradesh,Cheating,123,112,56,131,8.5
+Arunachal Pradesh,Counterfeiting,12,11,6,13,0.8
+Arunachal Pradesh,Criminal Breach of Trust,67,61,34,71,4.6
+Assam,Murder,1876,1723,1234,1987,5.4
+Assam,Rape,3456,3123,1234,3521,9.9
+Assam,Kidnapping & Abduction,4321,3987,2341,4432,12.4
+Assam,Robbery,876,812,456,901,2.5
+Assam,Burglary,8765,7932,3876,8901,25.2
+Assam,Theft,34567,31234,14567,35123,99.4
+Assam,Riots,2341,2123,1456,2987,6.7
+Assam,Cheating,3456,3123,1456,3521,9.9
+Assam,Counterfeiting,345,312,178,356,1.0
+Assam,Criminal Breach of Trust,2341,2123,987,2412,6.7
+Bihar,Murder,5432,4987,3456,5678,4.6
+Bihar,Rape,4321,3987,1765,4432,3.7
+Bihar,Kidnapping & Abduction,9876,9123,4567,10234,8.4
+Bihar,Robbery,3456,3123,1765,3567,2.9
+Bihar,Burglary,21345,19234,9876,21987,18.1
+Bihar,Theft,87654,78923,34567,89123,74.4
+Bihar,Riots,4321,3987,2341,5432,3.7
+Bihar,Cheating,8765,7932,3456,8901,7.4
+Bihar,Counterfeiting,876,812,456,901,0.7
+Bihar,Criminal Breach of Trust,5432,4987,2341,5678,4.6
+Chhattisgarh,Murder,1456,1323,987,1523,5.0
+Chhattisgarh,Rape,2987,2712,1234,3021,10.3
+Chhattisgarh,Kidnapping & Abduction,2341,2123,1023,2412,8.1
+Chhattisgarh,Robbery,567,512,267,581,2.0
+Chhattisgarh,Burglary,8765,7932,3876,8901,30.2
+Chhattisgarh,Theft,32456,29234,13456,33123,111.8
+Chhattisgarh,Riots,1234,1123,678,1567,4.3
+Chhattisgarh,Cheating,3456,3123,1456,3521,11.9
+Chhattisgarh,Counterfeiting,234,212,123,241,0.8
+Chhattisgarh,Criminal Breach of Trust,1876,1723,876,1923,6.5
+Goa,Murder,43,39,28,47,2.6
+Goa,Rape,189,171,89,194,11.5
+Goa,Kidnapping & Abduction,234,212,112,241,14.2
+Goa,Robbery,67,61,34,71,4.1
+Goa,Burglary,1234,1121,567,1267,75.0
+Goa,Theft,5678,5123,2341,5812,345.1
+Goa,Riots,23,21,12,28,1.4
+Goa,Cheating,456,412,198,467,27.7
+Goa,Counterfeiting,23,21,12,25,1.4
+Goa,Criminal Breach of Trust,234,212,112,241,14.2
+Gujarat,Murder,2234,2056,1478,2341,3.3
+Gujarat,Rape,3456,3123,1234,3521,5.0
+Gujarat,Kidnapping & Abduction,4321,3987,1987,4432,6.3
+Gujarat,Robbery,876,812,456,901,1.3
+Gujarat,Burglary,12345,11234,5678,12567,17.9
+Gujarat,Theft,56789,51234,23456,57901,82.5
+Gujarat,Riots,2341,2123,1234,2987,3.4
+Gujarat,Cheating,8765,7932,3876,8901,12.7
+Gujarat,Counterfeiting,567,512,267,581,0.8
+Gujarat,Criminal Breach of Trust,5432,4987,2341,5678,7.9
+Haryana,Murder,1876,1723,1234,1987,6.6
+Haryana,Rape,3234,2934,1234,3312,11.4
+Haryana,Kidnapping & Abduction,4321,3987,2341,4432,15.2
+Haryana,Robbery,567,512,267,581,2.0
+Haryana,Burglary,9876,8923,4567,10123,34.8
+Haryana,Theft,43456,39234,18456,44123,153.1
+Haryana,Riots,1234,1123,678,1567,4.3
+Haryana,Cheating,5432,4987,2341,5678,19.1
+Haryana,Counterfeiting,345,312,178,356,1.2
+Haryana,Criminal Breach of Trust,3456,3123,1456,3521,12.2
+Himachal Pradesh,Murder,234,212,156,241,3.2
+Himachal Pradesh,Rape,876,793,367,901,12.1
+Himachal Pradesh,Kidnapping & Abduction,567,512,267,581,7.8
+Himachal Pradesh,Robbery,67,61,34,71,0.9
+Himachal Pradesh,Burglary,3456,3123,1456,3521,47.7
+Himachal Pradesh,Theft,12345,11123,5678,12567,170.5
+Himachal Pradesh,Riots,123,112,67,134,1.7
+Himachal Pradesh,Cheating,1234,1121,567,1267,17.0
+Himachal Pradesh,Counterfeiting,56,51,28,58,0.8
+Himachal Pradesh,Criminal Breach of Trust,678,612,312,697,9.4
+Jharkhand,Murder,2134,1967,1345,2234,5.9
+Jharkhand,Rape,2987,2712,1234,3021,8.3
+Jharkhand,Kidnapping & Abduction,3456,3123,1567,3521,9.6
+Jharkhand,Robbery,876,812,456,901,2.4
+Jharkhand,Burglary,10234,9234,4567,10467,28.4
+Jharkhand,Theft,43456,39234,18456,44123,120.6
+Jharkhand,Riots,1876,1723,987,2341,5.2
+Jharkhand,Cheating,3456,3123,1456,3521,9.6
+Jharkhand,Counterfeiting,234,212,123,241,0.6
+Jharkhand,Criminal Breach of Trust,2341,2123,987,2412,6.5
+Karnataka,Murder,2987,2745,1987,3123,4.4
+Karnataka,Rape,4321,3987,1765,4432,6.3
+Karnataka,Kidnapping & Abduction,5678,5123,2567,5812,8.3
+Karnataka,Robbery,1234,1121,567,1267,1.8
+Karnataka,Burglary,18765,16934,8765,19123,27.4
+Karnataka,Theft,76543,69123,32456,78123,111.9
+Karnataka,Riots,2341,2123,1234,2987,3.4
+Karnataka,Cheating,12345,11234,5678,12567,18.0
+Karnataka,Counterfeiting,876,812,456,901,1.3
+Karnataka,Criminal Breach of Trust,7654,6934,3234,7812,11.2
+Kerala,Murder,1234,1134,876,1267,3.5
+Kerala,Rape,2341,2123,987,2412,6.7
+Kerala,Kidnapping & Abduction,3456,3123,1456,3521,9.9
+Kerala,Robbery,567,512,267,581,1.6
+Kerala,Burglary,9876,8923,4567,10123,28.3
+Kerala,Theft,45678,41234,18976,46789,131.0
+Kerala,Riots,1234,1123,678,1567,3.5
+Kerala,Cheating,8765,7932,3876,8901,25.1
+Kerala,Counterfeiting,345,312,178,356,1.0
+Kerala,Criminal Breach of Trust,5432,4987,2341,5678,15.6
+Madhya Pradesh,Murder,5678,5234,3678,5901,6.6
+Madhya Pradesh,Rape,8765,7932,3456,8901,10.2
+Madhya Pradesh,Kidnapping & Abduction,9876,8923,4567,10234,11.5
+Madhya Pradesh,Robbery,2341,2123,1123,2412,2.7
+Madhya Pradesh,Burglary,32456,29234,13456,33123,37.8
+Madhya Pradesh,Theft,123456,111234,51234,126789,143.9
+Madhya Pradesh,Riots,4321,3987,2341,5432,5.0
+Madhya Pradesh,Cheating,12345,11234,5678,12567,14.4
+Madhya Pradesh,Counterfeiting,876,812,456,901,1.0
+Madhya Pradesh,Criminal Breach of Trust,7654,6934,3234,7812,8.9
+Maharashtra,Murder,5234,4812,3345,5478,4.2
+Maharashtra,Rape,7654,6934,2987,7812,6.2
+Maharashtra,Kidnapping & Abduction,12345,11234,5678,12567,10.0
+Maharashtra,Robbery,3456,3123,1567,3521,2.8
+Maharashtra,Burglary,43456,39234,18456,44123,35.2
+Maharashtra,Theft,189765,171234,76543,193789,153.7
+Maharashtra,Riots,5432,4987,2987,6789,4.4
+Maharashtra,Cheating,23456,21234,9876,23987,19.0
+Maharashtra,Counterfeiting,1234,1121,578,1267,1.0
+Maharashtra,Criminal Breach of Trust,14567,13234,6234,14901,11.8
+Manipur,Murder,156,142,98,164,5.1
+Manipur,Rape,267,241,123,274,8.7
+Manipur,Kidnapping & Abduction,189,171,89,194,6.2
+Manipur,Robbery,45,41,23,47,1.5
+Manipur,Burglary,876,793,412,901,28.6
+Manipur,Theft,3456,3123,1456,3521,112.8
+Manipur,Riots,78,71,45,89,2.5
+Manipur,Cheating,234,212,112,241,7.6
+Manipur,Counterfeiting,23,21,12,25,0.8
+Manipur,Criminal Breach of Trust,134,121,67,139,4.4
+Meghalaya,Murder,134,121,87,141,4.6
+Meghalaya,Rape,234,212,112,241,8.0
+Meghalaya,Kidnapping & Abduction,189,171,89,194,6.5
+Meghalaya,Robbery,56,51,28,58,1.9
+Meghalaya,Burglary,876,793,412,901,30.1
+Meghalaya,Theft,3234,2934,1456,3312,111.1
+Meghalaya,Riots,45,41,23,51,1.5
+Meghalaya,Cheating,189,171,89,194,6.5
+Meghalaya,Counterfeiting,23,21,12,25,0.8
+Meghalaya,Criminal Breach of Trust,112,101,56,117,3.8
+Mizoram,Murder,56,51,37,59,4.7
+Mizoram,Rape,89,81,43,92,7.5
+Mizoram,Kidnapping & Abduction,67,61,32,71,5.6
+Mizoram,Robbery,12,11,6,13,1.0
+Mizoram,Burglary,345,312,156,356,29.0
+Mizoram,Theft,1234,1121,567,1267,103.7
+Mizoram,Riots,23,21,12,25,1.9
+Mizoram,Cheating,78,71,37,81,6.6
+Mizoram,Counterfeiting,8,7,4,9,0.7
+Mizoram,Criminal Breach of Trust,45,41,23,47,3.8
+Nagaland,Murder,78,71,48,81,3.3
+Nagaland,Rape,112,101,54,117,4.7
+Nagaland,Kidnapping & Abduction,89,81,43,92,3.8
+Nagaland,Robbery,23,21,12,25,1.0
+Nagaland,Burglary,456,412,198,467,19.2
+Nagaland,Theft,1876,1723,876,1923,79.1
+Nagaland,Riots,34,31,18,37,1.4
+Nagaland,Cheating,112,101,54,117,4.7
+Nagaland,Counterfeiting,12,11,6,13,0.5
+Nagaland,Criminal Breach of Trust,67,61,32,71,2.8
+Odisha,Murder,2134,1967,1345,2234,4.7
+Odisha,Rape,4321,3987,1765,4432,9.5
+Odisha,Kidnapping & Abduction,3456,3123,1456,3521,7.6
+Odisha,Robbery,876,812,456,901,1.9
+Odisha,Burglary,15678,14123,6789,16123,34.5
+Odisha,Theft,56789,51234,23456,57901,125.0
+Odisha,Riots,1234,1123,678,1567,2.7
+Odisha,Cheating,5432,4987,2341,5678,12.0
+Odisha,Counterfeiting,345,312,178,356,0.8
+Odisha,Criminal Breach of Trust,3456,3123,1456,3521,7.6
+Punjab,Murder,1567,1434,987,1623,5.4
+Punjab,Rape,2341,2123,987,2412,8.1
+Punjab,Kidnapping & Abduction,3456,3123,1567,3521,11.9
+Punjab,Robbery,678,612,312,697,2.3
+Punjab,Burglary,12345,11123,5678,12567,42.6
+Punjab,Theft,54321,48987,22345,55678,187.4
+Punjab,Riots,1234,1123,678,1567,4.3
+Punjab,Cheating,6789,6123,2876,6901,23.4
+Punjab,Counterfeiting,456,412,212,467,1.6
+Punjab,Criminal Breach of Trust,4321,3987,1876,4432,14.9
+Rajasthan,Murder,4321,3987,2765,4432,5.5
+Rajasthan,Rape,8765,7932,3456,8901,11.1
+Rajasthan,Kidnapping & Abduction,9876,8923,4567,10234,12.5
+Rajasthan,Robbery,2341,2123,1123,2412,3.0
+Rajasthan,Burglary,34567,31234,14567,35123,43.8
+Rajasthan,Theft,145678,131234,58956,149123,184.6
+Rajasthan,Riots,3456,3123,1876,4321,4.4
+Rajasthan,Cheating,13456,12234,5678,13789,17.1
+Rajasthan,Counterfeiting,876,812,456,901,1.1
+Rajasthan,Criminal Breach of Trust,8765,7932,3456,8901,11.1
+Sikkim,Murder,23,21,15,25,3.3
+Sikkim,Rape,56,51,27,58,8.0
+Sikkim,Kidnapping & Abduction,34,31,16,36,4.9
+Sikkim,Robbery,8,7,4,9,1.1
+Sikkim,Burglary,189,171,89,194,27.0
+Sikkim,Theft,678,612,312,697,96.8
+Sikkim,Riots,12,11,6,13,1.7
+Sikkim,Cheating,56,51,27,58,8.0
+Sikkim,Counterfeiting,5,4,2,5,0.7
+Sikkim,Criminal Breach of Trust,34,31,16,36,4.9
+Tamil Nadu,Murder,2987,2745,1987,3123,3.9
+Tamil Nadu,Rape,4567,4123,1876,4678,6.0
+Tamil Nadu,Kidnapping & Abduction,6789,6123,2987,6901,8.9
+Tamil Nadu,Robbery,1234,1121,567,1267,1.6
+Tamil Nadu,Burglary,23456,21234,9876,23987,30.8
+Tamil Nadu,Theft,98765,89123,38765,100123,129.7
+Tamil Nadu,Riots,2341,2123,1234,2987,3.1
+Tamil Nadu,Cheating,12345,11234,5234,12567,16.2
+Tamil Nadu,Counterfeiting,876,812,456,901,1.1
+Tamil Nadu,Criminal Breach of Trust,7654,6934,3234,7812,10.0
+Telangana,Murder,1876,1723,1234,1987,4.9
+Telangana,Rape,3456,3123,1345,3521,9.0
+Telangana,Kidnapping & Abduction,5678,5123,2456,5812,14.8
+Telangana,Robbery,876,812,456,901,2.3
+Telangana,Burglary,14567,13234,6234,14901,38.0
+Telangana,Theft,67890,61234,26789,69123,177.1
+Telangana,Riots,2341,2123,1234,2987,6.1
+Telangana,Cheating,9876,8923,4123,10123,25.7
+Telangana,Counterfeiting,567,512,267,581,1.5
+Telangana,Criminal Breach of Trust,5678,5123,2345,5812,14.8
+Tripura,Murder,234,212,156,241,6.0
+Tripura,Rape,456,412,198,467,11.7
+Tripura,Kidnapping & Abduction,345,312,156,356,8.9
+Tripura,Robbery,78,71,37,81,2.0
+Tripura,Burglary,2341,2123,1023,2412,60.2
+Tripura,Theft,8765,7932,3456,8901,225.4
+Tripura,Riots,189,171,98,194,4.9
+Tripura,Cheating,567,512,245,581,14.6
+Tripura,Counterfeiting,45,41,22,47,1.2
+Tripura,Criminal Breach of Trust,312,282,145,321,8.0
+Uttar Pradesh,Murder,11234,10234,7234,11678,4.9
+Uttar Pradesh,Rape,14567,13234,5678,14901,6.4
+Uttar Pradesh,Kidnapping & Abduction,21345,19234,9345,21987,9.4
+Uttar Pradesh,Robbery,5678,5123,2567,5812,2.5
+Uttar Pradesh,Burglary,67890,61234,28765,69123,29.9
+Uttar Pradesh,Theft,234567,211234,92345,239789,103.2
+Uttar Pradesh,Riots,8765,7932,4567,10234,3.9
+Uttar Pradesh,Cheating,23456,21234,9876,23987,10.3
+Uttar Pradesh,Counterfeiting,1876,1723,876,1923,0.8
+Uttar Pradesh,Criminal Breach of Trust,14567,13234,6234,14901,6.4
+Uttarakhand,Murder,567,512,367,581,5.1
+Uttarakhand,Rape,1234,1121,512,1267,11.1
+Uttarakhand,Kidnapping & Abduction,1567,1423,712,1612,14.1
+Uttarakhand,Robbery,234,212,112,241,2.1
+Uttarakhand,Burglary,5678,5123,2456,5812,51.1
+Uttarakhand,Theft,23456,21234,9456,23987,211.4
+Uttarakhand,Riots,456,412,234,467,4.1
+Uttarakhand,Cheating,2341,2123,987,2412,21.1
+Uttarakhand,Counterfeiting,145,131,68,149,1.3
+Uttarakhand,Criminal Breach of Trust,1234,1121,512,1267,11.1
+West Bengal,Murder,4321,3987,2765,4432,4.5
+West Bengal,Rape,5678,5123,2234,5812,5.9
+West Bengal,Kidnapping & Abduction,8765,7932,3876,8901,9.1
+West Bengal,Robbery,1876,1723,876,1923,1.9
+West Bengal,Burglary,32456,29234,13456,33123,33.6
+West Bengal,Theft,145678,131234,58956,149123,150.7
+West Bengal,Riots,5432,4987,2987,6789,5.6
+West Bengal,Cheating,13456,12234,5678,13789,13.9
+West Bengal,Counterfeiting,876,812,456,901,0.9
+West Bengal,Criminal Breach of Trust,8765,7932,3456,8901,9.1
+Delhi,Murder,654,601,423,678,3.4
+Delhi,Rape,2234,2023,898,2301,11.7
+Delhi,Kidnapping & Abduction,5678,5123,2345,5812,29.7
+Delhi,Robbery,876,812,456,901,4.6
+Delhi,Burglary,21345,19234,8765,21987,111.7
+Delhi,Theft,134567,121234,52345,137789,703.6
+Delhi,Riots,1234,1123,678,1567,6.5
+Delhi,Cheating,12345,11234,5234,12567,64.6
+Delhi,Counterfeiting,876,812,456,901,4.6
+Delhi,Criminal Breach of Trust,8765,7932,3456,8901,45.9
+Jammu & Kashmir,Murder,876,812,576,901,12.5
+Jammu & Kashmir,Rape,1234,1121,512,1267,17.6
+Jammu & Kashmir,Kidnapping & Abduction,1567,1423,712,1612,22.4
+Jammu & Kashmir,Robbery,345,312,167,356,4.9
+Jammu & Kashmir,Burglary,5678,5123,2345,5812,81.1
+Jammu & Kashmir,Theft,21345,19234,8765,21987,305.0
+Jammu & Kashmir,Riots,1234,1123,678,1567,17.6
+Jammu & Kashmir,Cheating,2341,2123,987,2412,33.4
+Jammu & Kashmir,Counterfeiting,189,171,89,194,2.7
+Jammu & Kashmir,Criminal Breach of Trust,1234,1121,512,1267,17.6
