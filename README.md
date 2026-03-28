@@ -9,25 +9,6 @@ A complete full-stack Data Science project analyzing India's 2020 crime statisti
 
 ---
 
-## 🌐 Live Preview
-
-> Run locally — see setup instructions below.
-
----
-
-## 📸 Screenshots
-
-### Home Page
-![Home](https://via.placeholder.com/900x400/0D1117/C0392B?text=Home+Page)
-
-### Dashboard
-![Dashboard](https://via.placeholder.com/900x400/0D1117/C0392B?text=Dashboard)
-
-### Visualizations
-![Charts](https://via.placeholder.com/900x400/0D1117/C0392B?text=8+Charts+Generated)
-
----
-
 ## 📁 Project Structure
 ```
 crime_project/
@@ -91,7 +72,7 @@ Click **Analysis** in navbar → Click **▶ Run Full Analysis**
 |--------|----------|-------------|
 | GET | `/` | Health check |
 | GET | `/data` | Full dataset as JSON |
-| GET | `/stats` | Key statistics & insights |
+| GET | `/stats` | Key statistics and insights |
 | GET | `/visualizations` | List of chart images |
 | POST | `/run-analysis` | Run full pipeline |
 | GET | `/image/<filename>` | Serve chart PNG |
@@ -102,7 +83,7 @@ Click **Analysis** in navbar → Click **▶ Run Full Analysis**
 
 ## 📊 Dataset
 
-**Source:** Modelled on NCRB (National Crime Records Bureau) 2020  
+**Source:** Modelled on NCRB (National Crime Records Bureau) 2020
 **Records:** 280 rows — 28 States × 10 Crime Types
 
 | Column | Description |
@@ -149,8 +130,8 @@ Click **Analysis** in navbar → Click **▶ Run Full Analysis**
 ## ✅ Features
 
 - 📊 Live KPI cards with animated counters
-- 📋 Sortable & filterable data table with CSV export
-- 🖼 Chart lightbox with keyboard navigation (← →)
+- 📋 Sortable and filterable data table with CSV export
+- 🖼 Chart lightbox with keyboard navigation
 - 📱 Fully responsive with mobile hamburger menu
 - ⏳ Skeleton loading states
 - 🔴 Graceful error handling on all pages
@@ -160,12 +141,12 @@ Click **Analysis** in navbar → Click **▶ Run Full Analysis**
 
 ## 👨‍💻 Author
 
-**Vansh Goyal**  
-📧 Connect on [GitHub](https://github.com/VANSH00102)
+**Vansh Goyal**
+GitHub: [VANSH00102](https://github.com/VANSH00102)
 
 ---
 
 ## 📄 License
 
-This project is for academic/educational purposes.  
+This project is for academic and educational purposes.
 Data modelled on NCRB 2020 public report.
